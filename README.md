@@ -1,6 +1,8 @@
 # nvim-early-retirement
 Send buffers into early retirement by automatically closing them after x minutes of inactivity.
 
+Makes the bufferline or `:bnext` less crowded.
+
 <!--toc:start-->
 - [Installation](#installation)
 - [Configuration](#configuration)
