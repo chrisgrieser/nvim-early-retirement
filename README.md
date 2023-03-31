@@ -42,6 +42,9 @@ opts = {
 	-- automatically be written and then closed.
 	ignoreUnsavedChangesBufs = true,
 
+	-- ignore non-empty buftypes, e.g. terminal buffers
+	ignoreSpecialBuftypes = true,
+
 	-- uses vim.notify for plugins like nvim-notify
 	notificationOnAutoClose = false,
 }
