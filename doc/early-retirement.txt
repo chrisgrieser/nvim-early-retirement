@@ -14,6 +14,8 @@ Table of Contents                         *early-retirement-table-of-contents*
 Send buffers into early retirement by automatically closing them after x
 minutes of inactivity.
 
+Makes the bufferline or `:bnext` less crowded.
+
 
 - |early-retirement-installation|
 - |early-retirement-configuration|
