@@ -18,7 +18,6 @@ local function checkOutdatedBuffer()
 		local isModified = bufOpt(buf.bufnr, "modified")
 		local isIgnoredUnsavedBuf = isModified and ignoreUnsavedChangesBufs
 
-		-- iterate all buffer
 		if
 			not (recentlyUsed or isIgnoredFt or isIgnoredSpecialBuffer or isIgnoredAltFile or isIgnoredUnsavedBuf)
 		then
