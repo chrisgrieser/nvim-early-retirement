@@ -1,4 +1,4 @@
-# nvim-early-retirement
+# nvim-early-retirement 👴
 Send buffers into early retirement by automatically closing them after x minutes of inactivity.
 
 Makes the bufferline or `:bnext` less crowded.
@@ -29,7 +29,7 @@ use {
 ## Configuration
 
 ```lua
--- default config
+-- default values
 opts = {
 	-- if a buffer has been inactive for this many minutes, close it
 	retirementAgeMins = 20,
@@ -59,6 +59,9 @@ To `@nikfp` and `@xorg-dogma` on Discord for their help.
 <!-- vale Google.FirstPerson = NO -->
 __About Me__  
 In my day job, I am a sociologist studying the social mechanisms underlying the digital economy. For my PhD project, I investigate the governance of the app economy and how software ecosystems manage the tension between innovation and compatibility. If you are interested in this subject, feel free to get in touch.
+
+__Blog__  
+I also occassionally blog about vim: [Nano Tips for Vim](https://nanotipsforvim.prose.sh)
 
 __Profiles__  
 - [Discord](https://discordapp.com/users/462774483044794368/)
