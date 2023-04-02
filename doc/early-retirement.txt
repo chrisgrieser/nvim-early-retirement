@@ -1,15 +1,15 @@
-*early-retirement.txt*        For NVIM v0.8.0       Last change: 2023 April 01
+*early-retirement.txt*        For NVIM v0.8.0       Last change: 2023 April 02
 
 ==============================================================================
 Table of Contents                         *early-retirement-table-of-contents*
 
-1. nvim-early-retirement              |early-retirement-nvim-early-retirement|
-  - Installation         |early-retirement-nvim-early-retirement-installation|
-  - Configuration       |early-retirement-nvim-early-retirement-configuration|
-  - Credits                   |early-retirement-nvim-early-retirement-credits|
+1. nvim-early-retirement 👴    |early-retirement-nvim-early-retirement-👴|
+  - Installation    |early-retirement-nvim-early-retirement-👴-installation|
+  - Configuration  |early-retirement-nvim-early-retirement-👴-configuration|
+  - Credits              |early-retirement-nvim-early-retirement-👴-credits|
 
 ==============================================================================
-1. nvim-early-retirement              *early-retirement-nvim-early-retirement*
+1. nvim-early-retirement 👴    *early-retirement-nvim-early-retirement-👴*
 
 Send buffers into early retirement by automatically closing them after x
 minutes of inactivity.
@@ -22,7 +22,7 @@ Makes the bufferline or `:bnext` less crowded.
 - |early-retirement-credits|
 
 
-INSTALLATION             *early-retirement-nvim-early-retirement-installation*
+INSTALLATION        *early-retirement-nvim-early-retirement-👴-installation*
 
 >lua
     -- packer
@@ -40,10 +40,10 @@ INSTALLATION             *early-retirement-nvim-early-retirement-installation*
 <
 
 
-CONFIGURATION           *early-retirement-nvim-early-retirement-configuration*
+CONFIGURATION      *early-retirement-nvim-early-retirement-👴-configuration*
 
 >lua
-    -- default config
+    -- default values
     opts = {
         -- if a buffer has been inactive for this many minutes, close it
         retirementAgeMins = 20,
@@ -67,7 +67,7 @@ CONFIGURATION           *early-retirement-nvim-early-retirement-configuration*
 <
 
 
-CREDITS                       *early-retirement-nvim-early-retirement-credits*
+CREDITS                  *early-retirement-nvim-early-retirement-👴-credits*
 
 **Thanks** To `@nikfp` and `@xorg-dogma` on Discord for their help.
 
@@ -76,6 +76,9 @@ underlying the digital economy. For my PhD project, I investigate the
 governance of the app economy and how software ecosystems manage the tension
 between innovation and compatibility. If you are interested in this subject,
 feel free to get in touch.
+
+**Blog** I also occassionally blog about vim: Nano Tips for Vim
+<https://nanotipsforvim.prose.sh>
 
 **Profiles** - Discord <https://discordapp.com/users/462774483044794368/> -
 Academic Website <https://chris-grieser.de/> - GitHub
