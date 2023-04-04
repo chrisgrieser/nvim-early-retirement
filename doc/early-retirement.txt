@@ -1,15 +1,15 @@
-*early-retirement.txt*        For NVIM v0.8.0       Last change: 2023 April 02
+*early-retirement.txt*        For NVIM v0.8.0       Last change: 2023 April 04
 
 ==============================================================================
 Table of Contents                         *early-retirement-table-of-contents*
 
-1. nvim-early-retirement 👴    |early-retirement-nvim-early-retirement-👴|
-  - Installation    |early-retirement-nvim-early-retirement-👴-installation|
-  - Configuration  |early-retirement-nvim-early-retirement-👴-configuration|
-  - Credits              |early-retirement-nvim-early-retirement-👴-credits|
+1. nvim-early-retirement 👴👵|early-retirement-nvim-early-retirement-👴👵|
+  - Installation|early-retirement-nvim-early-retirement-👴👵-installation|
+  - Configuration|early-retirement-nvim-early-retirement-👴👵-configuration|
+  - Credits          |early-retirement-nvim-early-retirement-👴👵-credits|
 
 ==============================================================================
-1. nvim-early-retirement 👴    *early-retirement-nvim-early-retirement-👴*
+1. nvim-early-retirement 👴👵*early-retirement-nvim-early-retirement-👴👵*
 
 Send buffers into early retirement by automatically closing them after x
 minutes of inactivity.
@@ -22,7 +22,7 @@ Makes the bufferline or `:bnext` less crowded.
 - |early-retirement-credits|
 
 
-INSTALLATION        *early-retirement-nvim-early-retirement-👴-installation*
+INSTALLATION    *early-retirement-nvim-early-retirement-👴👵-installation*
 
 >lua
     -- packer
@@ -40,7 +40,7 @@ INSTALLATION        *early-retirement-nvim-early-retirement-👴-installation*
 <
 
 
-CONFIGURATION      *early-retirement-nvim-early-retirement-👴-configuration*
+CONFIGURATION  *early-retirement-nvim-early-retirement-👴👵-configuration*
 
 >lua
     -- default values
@@ -61,13 +61,16 @@ CONFIGURATION      *early-retirement-nvim-early-retirement-👴-configuration*
         -- ignore non-empty buftypes, e.g. terminal buffers
         ignoreSpecialBuftypes = true,
     
+        -- ignore visible buffers (buffers open in a window, "a" in `:buffers`)
+        ignoreVisibleBufs = true,
+    
         -- uses vim.notify for plugins like nvim-notify
         notificationOnAutoClose = false,
     }
 <
 
 
-CREDITS                  *early-retirement-nvim-early-retirement-👴-credits*
+CREDITS              *early-retirement-nvim-early-retirement-👴👵-credits*
 
 **Thanks** To `@nikfp` and `@xorg-dogma` on Discord for their help.
 
@@ -77,7 +80,7 @@ governance of the app economy and how software ecosystems manage the tension
 between innovation and compatibility. If you are interested in this subject,
 feel free to get in touch.
 
-**Blog** I also occassionally blog about vim: Nano Tips for Vim
+**Blog** I also occasionally blog about vim: Nano Tips for Vim
 <https://nanotipsforvim.prose.sh>
 
 **Profiles** - Discord <https://discordapp.com/users/462774483044794368/> -
