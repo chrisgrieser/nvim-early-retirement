@@ -1,18 +1,18 @@
-*early-retirement.txt*        For NVIM v0.8.0       Last change: 2023 April 04
+*early-retirement.txt*        For NVIM v0.8.0       Last change: 2023 April 06
 
 ==============================================================================
 Table of Contents                         *early-retirement-table-of-contents*
 
-1. nvim-early-retirement 👴👵|early-retirement-nvim-early-retirement-👴👵|
-  - Installation|early-retirement-nvim-early-retirement-👴👵-installation|
-  - Configuration|early-retirement-nvim-early-retirement-👴👵-configuration|
-  - Credits          |early-retirement-nvim-early-retirement-👴👵-credits|
+1. nvim-early-retirement             |early-retirement-nvim-early-retirement-|
+  - Installation        |early-retirement-nvim-early-retirement--installation|
+  - Configuration      |early-retirement-nvim-early-retirement--configuration|
+  - Credits                  |early-retirement-nvim-early-retirement--credits|
 
 ==============================================================================
-1. nvim-early-retirement 👴👵*early-retirement-nvim-early-retirement-👴👵*
+1. nvim-early-retirement             *early-retirement-nvim-early-retirement-*
 
-Send buffers into early retirement by automatically closing them after x
-minutes of inactivity.
+Sendbuffers into early retirement by automatically closing them after x minutes
+of inactivity.
 
 Makes the bufferline or `:bnext` less crowded.
 
@@ -22,7 +22,7 @@ Makes the bufferline or `:bnext` less crowded.
 - |early-retirement-credits|
 
 
-INSTALLATION    *early-retirement-nvim-early-retirement-👴👵-installation*
+INSTALLATION            *early-retirement-nvim-early-retirement--installation*
 
 >lua
     -- packer
@@ -40,7 +40,7 @@ INSTALLATION    *early-retirement-nvim-early-retirement-👴👵-installation*
 <
 
 
-CONFIGURATION  *early-retirement-nvim-early-retirement-👴👵-configuration*
+CONFIGURATION          *early-retirement-nvim-early-retirement--configuration*
 
 >lua
     -- default values
@@ -70,7 +70,7 @@ CONFIGURATION  *early-retirement-nvim-early-retirement-👴👵-configuration*
 <
 
 
-CREDITS              *early-retirement-nvim-early-retirement-👴👵-credits*
+CREDITS                      *early-retirement-nvim-early-retirement--credits*
 
 **Thanks** To `@nikfp` and `@xorg-dogma` on Discord for their help.
 
