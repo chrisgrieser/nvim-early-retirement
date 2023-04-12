@@ -40,6 +40,12 @@ opts = {
 	-- will not close the alternate file
 	ignoreAltFile = true,
 
+	-- minimum number of open buffers for auto-closing to become active, e.g.,
+	-- by setting this to 4, no auto-closing will take place when you have 3 
+	-- or less open buffers. Note that this plugin never closes the currently 
+	-- active buffer, so a number < 2 will effectively disable this setting.
+	minimumBufferNum = 1, 
+
 	-- will ignore buffers with unsaved changes. If false, the buffers will
 	-- automatically be written and then closed.
 	ignoreUnsavedChangesBufs = true,

@@ -1,11 +1,12 @@
 local M = {}
 local bufOpt = vim.api.nvim_buf_get_option
-local ignoredFiletypes, retirementAgeMins, notificationOnAutoClose, ignoreAltFile, ignoreUnsavedChangesBufs, ignoreSpecialBuftypes, ignoreVisibleBufs
+local ignoredFiletypes, retirementAgeMins, notificationOnAutoClose, ignoreAltFile, ignoreUnsavedChangesBufs, ignoreSpecialBuftypes, ignoreVisibleBufs, minimumBufferNum
 
 --------------------------------------------------------------------------------
 
 local function checkOutdatedBuffer()
 	local openBuffers = vim.fn.getbufinfo { buflisted = 1 } -- https://neovim.io/doc/user/builtin.html#getbufinfo
+	if #openBuffers < minimumBufferNum then return end
 
 	for _, buf in pairs(openBuffers) do
 		-- check all the conditions
@@ -48,6 +49,7 @@ end
 ---@field ignoreUnsavedChangesBufs boolean when false, will automatically write and then close buffers with unsaved changes
 ---@field ignoreSpecialBuftypes boolean ignore non-empty buftypes, e.g. terminal buffers
 ---@field ignoreVisibleBufs boolean ignore visible buffers (buffers open in a window, "a" in `:buffers`)
+---@field minimumBufferNum number minimum number of open buffers for auto-closing to become active
 
 ---@param opts opts
 function M.setup(opts)
@@ -57,6 +59,7 @@ function M.setup(opts)
 	ignoredFiletypes = opts.ignoredFiletypes or { "lazy" }
 	notificationOnAutoClose = opts.notificationOnAutoClose or false
 	ignoreAltFile = opts.ignoreAltFile or true
+	minimumBufferNum = opts.minimumBufferNum or 1
 	ignoreUnsavedChangesBufs = opts.ignoreUnsavedChangesBufs or true
 	ignoreSpecialBuftypes = opts.ignoreSpecialBuftypes or true
 	ignoreVisibleBufs = opts.ignoreVisibleBufs or true
