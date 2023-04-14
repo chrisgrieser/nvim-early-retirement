@@ -56,6 +56,9 @@ opts = {
 	-- ignore visible buffers (buffers open in a window, "a" in `:buffers`)
 	ignoreVisibleBufs = true,
 
+	-- ignore buffers bound to windows, even from inactive tabs
+	ignoreBoundBufs = false,
+
 	-- uses vim.notify for plugins like nvim-notify
 	notificationOnAutoClose = false,
 }

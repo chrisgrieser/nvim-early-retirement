@@ -1,12 +1,21 @@
 local M = {}
 local bufOpt = vim.api.nvim_buf_get_option
-local ignoredFiletypes, retirementAgeMins, notificationOnAutoClose, ignoreAltFile, ignoreUnsavedChangesBufs, ignoreSpecialBuftypes, ignoreVisibleBufs, minimumBufferNum
+local ignoredFiletypes, retirementAgeMins, notificationOnAutoClose, ignoreAltFile, ignoreUnsavedChangesBufs, ignoreSpecialBuftypes, ignoreVisibleBufs, minimumBufferNum, ignoreBoundBufs
 
 --------------------------------------------------------------------------------
 
 local function checkOutdatedBuffer()
 	local openBuffers = vim.fn.getbufinfo { buflisted = 1 } -- https://neovim.io/doc/user/builtin.html#getbufinfo
 	if #openBuffers < minimumBufferNum then return end
+
+	-- Find buffers bound to windows
+	local boundBuffers = {}
+	if ignoreBoundBufs then
+		for _, win in pairs(vim.api.nvim_list_wins()) do
+			local buf = vim.api.nvim_win_get_buf(win)
+			boundBuffers[buf] = true
+		end
+	end
 
 	for _, buf in pairs(openBuffers) do
 		-- check all the conditions
@@ -19,6 +28,7 @@ local function checkOutdatedBuffer()
 		local isModified = bufOpt(buf.bufnr, "modified")
 		local isIgnoredUnsavedBuf = isModified and ignoreUnsavedChangesBufs
 		local isIgnoredVisibleBuf = buf.hidden == 0 and ignoreVisibleBufs
+		local isIgnoredBoundBuf = boundBuffers[buf.bufnr]
 
 		if
 			not recentlyUsed
@@ -27,6 +37,7 @@ local function checkOutdatedBuffer()
 			and not isIgnoredAltFile
 			and not isIgnoredUnsavedBuf
 			and not isIgnoredVisibleBuf
+			and not isIgnoredBoundBuf
 		then
 			if notificationOnAutoClose then
 				local filename = vim.fs.basename(buf.name)
@@ -49,6 +60,7 @@ end
 ---@field ignoreUnsavedChangesBufs boolean when false, will automatically write and then close buffers with unsaved changes
 ---@field ignoreSpecialBuftypes boolean ignore non-empty buftypes, e.g. terminal buffers
 ---@field ignoreVisibleBufs boolean ignore visible buffers (buffers open in a window, "a" in `:buffers`)
+---@field ignoreBoundBufs boolean ignore buffers bound to windows, even from inactive tabs
 ---@field minimumBufferNum number minimum number of open buffers for auto-closing to become active
 
 ---@param opts opts
@@ -63,6 +75,7 @@ function M.setup(opts)
 	ignoreUnsavedChangesBufs = opts.ignoreUnsavedChangesBufs or true
 	ignoreSpecialBuftypes = opts.ignoreSpecialBuftypes or true
 	ignoreVisibleBufs = opts.ignoreVisibleBufs or true
+	ignoreBoundBufs = opts.ignoreBoundBufs or false
 
 	local timer = vim.loop.new_timer() -- https://neovim.io/doc/user/luvref.html#uv.new_timer()
 	if not timer then return end
