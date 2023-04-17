@@ -1,6 +1,6 @@
 local M = {}
 local bufOpt = vim.api.nvim_buf_get_option
-local ignoredFiletypes, retirementAgeMins, notificationOnAutoClose, ignoreAltFile, ignoreUnsavedChangesBufs, ignoreSpecialBuftypes, ignoreVisibleBufs, minimumBufferNum
+local ignoredFiletypes, retirementAgeMins, notificationOnAutoClose, ignoreAltFile, ignoreUnsavedChangesBufs, ignoreSpecialBuftypes, ignoreVisibleBufs, minimumBufferNum, ignoreUnloadedBufs
 
 --------------------------------------------------------------------------------
 
@@ -19,6 +19,7 @@ local function checkOutdatedBuffer()
 		local isModified = bufOpt(buf.bufnr, "modified")
 		local isIgnoredUnsavedBuf = isModified and ignoreUnsavedChangesBufs
 		local isIgnoredVisibleBuf = buf.hidden == 0 and ignoreVisibleBufs
+		local isIgnoredUnloadedBuf = buf.loaded == 1 and ignoreUnloadedBufs
 
 		if
 			not recentlyUsed
@@ -27,6 +28,7 @@ local function checkOutdatedBuffer()
 			and not isIgnoredAltFile
 			and not isIgnoredUnsavedBuf
 			and not isIgnoredVisibleBuf
+			and not isIgnoredUnloadedBuf
 		then
 			if notificationOnAutoClose then
 				local filename = vim.fs.basename(buf.name)
@@ -49,6 +51,7 @@ end
 ---@field ignoreUnsavedChangesBufs boolean when false, will automatically write and then close buffers with unsaved changes
 ---@field ignoreSpecialBuftypes boolean ignore non-empty buftypes, e.g. terminal buffers
 ---@field ignoreVisibleBufs boolean ignore visible buffers (buffers open in a window, "a" in `:buffers`)
+---@field ignoreUnloadedBufs boolean session plugins often add buffers without unloading them
 ---@field minimumBufferNum number minimum number of open buffers for auto-closing to become active
 
 ---@param opts opts
@@ -63,6 +66,7 @@ function M.setup(opts)
 	ignoreUnsavedChangesBufs = opts.ignoreUnsavedChangesBufs or true
 	ignoreSpecialBuftypes = opts.ignoreSpecialBuftypes or true
 	ignoreVisibleBufs = opts.ignoreVisibleBufs or true
+	ignoreUnloadedBufs = opts.ignoreUnloadedBufs or true
 
 	local timer = vim.loop.new_timer() -- https://neovim.io/doc/user/luvref.html#uv.new_timer()
 	if not timer then return end

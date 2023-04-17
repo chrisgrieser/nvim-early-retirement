@@ -50,11 +50,16 @@ opts = {
 	-- automatically be written and then closed.
 	ignoreUnsavedChangesBufs = true,
 
-	-- ignore non-empty buftypes, e.g. terminal buffers
+	-- ignore non-empty buftypes, for example terminal buffers
 	ignoreSpecialBuftypes = true,
 
-	-- ignore visible buffers (buffers open in a window, "a" in `:buffers`)
+	-- ignore visible buffers ("a" in `:buffers`). buffers open in a window, 
+	-- or in a tab are consider visible by vim
 	ignoreVisibleBufs = true,
+
+	-- ignore unloaded buffers. session-management plugin often add buffers
+	-- to the buffer list without loading them
+	ignoreUnloadedBufs = true,
 
 	-- uses vim.notify for plugins like nvim-notify
 	notificationOnAutoClose = false,
