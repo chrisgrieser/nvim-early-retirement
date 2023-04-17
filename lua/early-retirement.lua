@@ -18,7 +18,7 @@ local function checkOutdatedBuffer()
 		local isIgnoredAltFile = (buf.name == vim.fn.expand("#:p")) and ignoreAltFile
 		local isModified = bufOpt(buf.bufnr, "modified")
 		local isIgnoredUnsavedBuf = isModified and ignoreUnsavedChangesBufs
-		local isIgnoredVisibleBuf = buf.hidden == 0 and ignoreVisibleBufs
+		local isIgnoredVisibleBuf = buf.hidden == 0 and buf.loaded == 1 and ignoreVisibleBufs
 		local isIgnoredUnloadedBuf = buf.loaded == 0 and ignoreUnloadedBufs
 
 		if
