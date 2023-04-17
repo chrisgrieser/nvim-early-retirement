@@ -59,7 +59,7 @@ opts = {
 
 	-- ignore unloaded buffers. session-management plugin often add buffers
 	-- to the buffer list without loading them
-	ignoreUnloadedBufs = true,
+	ignoreUnloadedBufs = false,
 
 	-- uses vim.notify for plugins like nvim-notify
 	notificationOnAutoClose = false,

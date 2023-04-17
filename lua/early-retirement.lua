@@ -19,7 +19,7 @@ local function checkOutdatedBuffer()
 		local isModified = bufOpt(buf.bufnr, "modified")
 		local isIgnoredUnsavedBuf = isModified and ignoreUnsavedChangesBufs
 		local isIgnoredVisibleBuf = buf.hidden == 0 and ignoreVisibleBufs
-		local isIgnoredUnloadedBuf = buf.loaded == 1 and ignoreUnloadedBufs
+		local isIgnoredUnloadedBuf = buf.loaded == 0 and ignoreUnloadedBufs
 
 		if
 			not recentlyUsed
@@ -66,7 +66,7 @@ function M.setup(opts)
 	ignoreUnsavedChangesBufs = opts.ignoreUnsavedChangesBufs or true
 	ignoreSpecialBuftypes = opts.ignoreSpecialBuftypes or true
 	ignoreVisibleBufs = opts.ignoreVisibleBufs or true
-	ignoreUnloadedBufs = opts.ignoreUnloadedBufs or true
+	ignoreUnloadedBufs = opts.ignoreUnloadedBufs or false
 
 	local timer = vim.loop.new_timer() -- https://neovim.io/doc/user/luvref.html#uv.new_timer()
 	if not timer then return end
