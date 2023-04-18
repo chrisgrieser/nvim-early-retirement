@@ -70,7 +70,7 @@ function M.setup(opts)
 
 	local timer = vim.loop.new_timer() -- https://neovim.io/doc/user/luvref.html#uv.new_timer()
 	if not timer then return end
-	timer:start(0, 10000, vim.schedule_wrap(checkOutdatedBuffer)) -- schedule wrapper required for timers
+	timer:start(retirementAgeMins * 60000, 10000, vim.schedule_wrap(checkOutdatedBuffer)) -- schedule wrapper required for timers
 end
 
 --------------------------------------------------------------------------------
