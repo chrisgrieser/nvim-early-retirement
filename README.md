@@ -7,6 +7,7 @@ Makes the bufferline or `:bnext` less crowded.
 - [Installation](#installation)
 - [Configuration](#configuration)
 - [Credits](#credits)
+- [Similar Plugins](#similar-plugins)
 <!--toc:end-->
 
 ## Installation
@@ -65,6 +66,9 @@ opts = {
 	notificationOnAutoClose = false,
 }
 ```
+
+## Similar Plugins
+- Close unedited files: [hbac](https://github.com/axkirillov/hbac.nvim)
 
 ## Credits
 __Thanks__  
