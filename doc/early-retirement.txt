@@ -1,4 +1,4 @@
-*early-retirement.txt*        For NVIM v0.8.0       Last change: 2023 April 18
+*early-retirement.txt*        For NVIM v0.8.0       Last change: 2023 April 26
 
 ==============================================================================
 Table of Contents                         *early-retirement-table-of-contents*
@@ -6,6 +6,7 @@ Table of Contents                         *early-retirement-table-of-contents*
 1. nvim-early-retirement             |early-retirement-nvim-early-retirement-|
   - Installation        |early-retirement-nvim-early-retirement--installation|
   - Configuration      |early-retirement-nvim-early-retirement--configuration|
+  - Similar Plugins  |early-retirement-nvim-early-retirement--similar-plugins|
   - Credits                  |early-retirement-nvim-early-retirement--credits|
 
 ==============================================================================
@@ -20,6 +21,7 @@ Makes the bufferline or `:bnext` less crowded.
 - |early-retirement-installation|
 - |early-retirement-configuration|
 - |early-retirement-credits|
+- |early-retirement-similar-plugins|
 
 
 INSTALLATION            *early-retirement-nvim-early-retirement--installation*
@@ -79,6 +81,12 @@ CONFIGURATION          *early-retirement-nvim-early-retirement--configuration*
         notificationOnAutoClose = false,
     }
 <
+
+
+SIMILAR PLUGINS      *early-retirement-nvim-early-retirement--similar-plugins*
+
+
+- Close unedited files: hbac <https://github.com/axkirillov/hbac.nvim>
 
 
 CREDITS                      *early-retirement-nvim-early-retirement--credits*
