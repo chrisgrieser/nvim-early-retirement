@@ -1,4 +1,4 @@
-*early-retirement.txt*        For NVIM v0.8.0       Last change: 2023 April 26
+*early-retirement.txt*         For NVIM v0.8.0        Last change: 2023 May 01
 
 ==============================================================================
 Table of Contents                         *early-retirement-table-of-contents*
@@ -12,8 +12,8 @@ Table of Contents                         *early-retirement-table-of-contents*
 ==============================================================================
 1. nvim-early-retirement             *early-retirement-nvim-early-retirement-*
 
-Sendbuffers into early retirement by automatically closing them after x minutes
-of inactivity.
+Send buffers into early retirement by automatically closing them after x
+minutes of inactivity.
 
 Makes the bufferline or `:bnext` less crowded.
 
@@ -52,6 +52,10 @@ CONFIGURATION          *early-retirement-nvim-early-retirement--configuration*
     
         -- filetypes to ignore
         ignoredFiletypes = {},
+    
+        -- ignore files matches this lua pattern (string.find); empty string 
+        -- disables this setting
+        ignoreFilenamePattern = "";
     
         -- will not close the alternate file
         ignoreAltFile = true,
