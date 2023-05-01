@@ -1,9 +1,10 @@
 local M = {}
 local bufOpt = vim.api.nvim_buf_get_option
-local ignoredFiletypes, retirementAgeMins, notificationOnAutoClose, ignoreAltFile, ignoreUnsavedChangesBufs, ignoreSpecialBuftypes, ignoreVisibleBufs, minimumBufferNum, ignoreUnloadedBufs
+local ignoredFiletypes, retirementAgeMins, notificationOnAutoClose, ignoreAltFile, ignoreUnsavedChangesBufs, ignoreSpecialBuftypes, ignoreVisibleBufs, minimumBufferNum, ignoreUnloadedBufs, ignorePattern
 
 --------------------------------------------------------------------------------
 
+-- selene: allow(high_cyclomatic_complexity)
 local function checkOutdatedBuffer()
 	local openBuffers = vim.fn.getbufinfo { buflisted = 1 } -- https://neovim.io/doc/user/builtin.html#getbufinfo
 	if #openBuffers < minimumBufferNum then return end
@@ -20,6 +21,7 @@ local function checkOutdatedBuffer()
 		local isIgnoredUnsavedBuf = isModified and ignoreUnsavedChangesBufs
 		local isIgnoredVisibleBuf = buf.hidden == 0 and buf.loaded == 1 and ignoreVisibleBufs
 		local isIgnoredUnloadedBuf = buf.loaded == 0 and ignoreUnloadedBufs
+		local isIgnoredFilename = ignorePattern ~= "" and buf.name:find(ignorePattern)
 
 		if
 			not recentlyUsed
@@ -29,6 +31,7 @@ local function checkOutdatedBuffer()
 			and not isIgnoredUnsavedBuf
 			and not isIgnoredVisibleBuf
 			and not isIgnoredUnloadedBuf
+			and not isIgnoredFilename
 		then
 			if notificationOnAutoClose then
 				local filename = vim.fs.basename(buf.name)
@@ -53,6 +56,7 @@ end
 ---@field ignoreVisibleBufs boolean ignore visible buffers (buffers open in a window, "a" in `:buffers`)
 ---@field ignoreUnloadedBufs boolean session plugins often add buffers without unloading them
 ---@field minimumBufferNum number minimum number of open buffers for auto-closing to become active
+---@field ignoreFilenamePattern string ignore files matches this lua pattern (string.find)
 
 ---@param opts opts
 function M.setup(opts)
@@ -67,6 +71,7 @@ function M.setup(opts)
 	ignoreSpecialBuftypes = opts.ignoreSpecialBuftypes or true
 	ignoreVisibleBufs = opts.ignoreVisibleBufs or true
 	ignoreUnloadedBufs = opts.ignoreUnloadedBufs or false
+	ignorePattern = opts.ignoreFilenamePattern or ""
 
 	local timer = vim.loop.new_timer() -- https://neovim.io/doc/user/luvref.html#uv.new_timer()
 	if not timer then return end

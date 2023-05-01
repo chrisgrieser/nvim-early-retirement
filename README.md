@@ -1,4 +1,5 @@
-# nvim-early-retirement 👴👵
+<!-- LTeX: enabled=false -->
+# nvim-early-retirement 👴👵 <!-- LTeX: enabled=true -->
 Send buffers into early retirement by automatically closing them after x minutes of inactivity.
 
 Makes the bufferline or `:bnext` less crowded.
@@ -38,6 +39,10 @@ opts = {
 	-- filetypes to ignore
 	ignoredFiletypes = {},
 
+	-- ignore files matches this lua pattern (string.find); empty string 
+	-- disables this setting
+	ignoreFilenamePattern = "";
+
 	-- will not close the alternate file
 	ignoreAltFile = true,
 
@@ -68,7 +73,11 @@ opts = {
 ```
 
 ## Similar Plugins
+<!-- vale Vale.Spelling = NO -->
+<!-- LTeX: enabled=false -->
 - Close unedited files: [hbac](https://github.com/axkirillov/hbac.nvim)
+<!-- LTeX: enabled=true -->
+<!-- vale Vale.Spelling = YES -->
 
 ## Credits
 __Thanks__  
