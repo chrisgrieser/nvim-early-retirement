@@ -1,4 +1,4 @@
-*early-retirement.txt*         For NVIM v0.8.0        Last change: 2023 May 01
+*early-retirement.txt*        For NVIM v0.8.0        Last change: 2023 July 24
 
 ==============================================================================
 Table of Contents                         *early-retirement-table-of-contents*
@@ -16,7 +16,6 @@ Send buffers into early retirement by automatically closing them after x
 minutes of inactivity.
 
 Makes the bufferline or `:bnext` less crowded.
-
 
 - |early-retirement-installation|
 - |early-retirement-configuration|
@@ -88,7 +87,6 @@ CONFIGURATION          *early-retirement-nvim-early-retirement--configuration*
 
 
 SIMILAR PLUGINS      *early-retirement-nvim-early-retirement--similar-plugins*
-
 
 - Close unedited files: hbac <https://github.com/axkirillov/hbac.nvim>
 
