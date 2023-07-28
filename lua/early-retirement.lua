@@ -1,27 +1,26 @@
 local M = {}
 local bufOpt = vim.api.nvim_buf_get_option
-local ignoredFiletypes, retirementAgeMins, notificationOnAutoClose, ignoreAltFile, ignoreUnsavedChangesBufs, ignoreSpecialBuftypes, ignoreVisibleBufs, minimumBufferNum, ignoreUnloadedBufs, ignorePattern
 
 --------------------------------------------------------------------------------
 
--- selene: allow(high_cyclomatic_complexity)
-local function checkOutdatedBuffer()
+---@param c opts effective config
+local function checkOutdatedBuffer(c)
 	local openBuffers = vim.fn.getbufinfo { buflisted = 1 } -- https://neovim.io/doc/user/builtin.html#getbufinfo
-	if #openBuffers < minimumBufferNum then return end
+	if #openBuffers < c.minimumBufferNum then return end
 
 	for _, buf in pairs(openBuffers) do
 		-- check all the conditions
 		local usedSecsAgo = os.time() - buf.lastused -- always 0 for current buffer, therefore it's never closed
-		local recentlyUsed = usedSecsAgo < retirementAgeMins * 60
+		local recentlyUsed = usedSecsAgo < c.retirementAgeMins * 60
 		local bufFt = bufOpt(buf.bufnr, "filetype")
-		local isIgnoredFt = vim.tbl_contains(ignoredFiletypes, bufFt)
-		local isIgnoredSpecialBuffer = bufOpt(buf.bufnr, "buftype") ~= "" and ignoreSpecialBuftypes
-		local isIgnoredAltFile = (buf.name == vim.fn.expand("#:p")) and ignoreAltFile
+		local isIgnoredFt = vim.tbl_contains(c.ignoredFiletypes, bufFt)
+		local isIgnoredSpecialBuffer = bufOpt(buf.bufnr, "buftype") ~= "" and c.ignoreSpecialBuftypes
+		local isIgnoredAltFile = (buf.name == vim.fn.expand("#:p")) and c.ignoreAltFile
 		local isModified = bufOpt(buf.bufnr, "modified")
-		local isIgnoredUnsavedBuf = isModified and ignoreUnsavedChangesBufs
-		local isIgnoredVisibleBuf = buf.hidden == 0 and buf.loaded == 1 and ignoreVisibleBufs
-		local isIgnoredUnloadedBuf = buf.loaded == 0 and ignoreUnloadedBufs
-		local isIgnoredFilename = ignorePattern ~= "" and buf.name:find(ignorePattern)
+		local isIgnoredUnsavedBuf = isModified and c.ignoreUnsavedChangesBufs
+		local isIgnoredVisibleBuf = buf.hidden == 0 and buf.loaded == 1 and c.ignoreVisibleBufs
+		local isIgnoredUnloadedBuf = buf.loaded == 0 and c.ignoreUnloadedBufs
+		local isIgnoredFilename = c.ignoreFilenamePattern ~= "" and buf.name:find(c.ignoreFilenamePattern)
 
 		if
 			not recentlyUsed
@@ -33,7 +32,7 @@ local function checkOutdatedBuffer()
 			and not isIgnoredUnloadedBuf
 			and not isIgnoredFilename
 		then
-			if notificationOnAutoClose then
+			if c.notificationOnAutoClose then
 				local filename = vim.fs.basename(buf.name)
 				vim.notify("Auto-Closing Buffer:\n" .. filename)
 			end
@@ -58,24 +57,29 @@ end
 ---@field minimumBufferNum number minimum number of open buffers for auto-closing to become active
 ---@field ignoreFilenamePattern string ignore files matches this lua pattern (string.find)
 
----@param opts opts
-function M.setup(opts)
-	if not opts then opts = {} end
-	-- default values
-	retirementAgeMins = opts.retirementAgeMins or 20
-	ignoredFiletypes = opts.ignoredFiletypes or { "lazy" }
-	notificationOnAutoClose = opts.notificationOnAutoClose or false
-	ignoreAltFile = opts.ignoreAltFile or true
-	minimumBufferNum = opts.minimumBufferNum or 1
-	ignoreUnsavedChangesBufs = opts.ignoreUnsavedChangesBufs or true
-	ignoreSpecialBuftypes = opts.ignoreSpecialBuftypes or true
-	ignoreVisibleBufs = opts.ignoreVisibleBufs or true
-	ignoreUnloadedBufs = opts.ignoreUnloadedBufs or false
-	ignorePattern = opts.ignoreFilenamePattern or ""
+---@param config opts
+function M.setup(config)
+	local defaultConfig = {
+		retirementAgeMins = 20,
+		ignoredFiletypes = { "lazy" },
+		notificationOnAutoClose = false,
+		ignoreAltFile = true,
+		minimumBufferNum = 1,
+		ignoreUnsavedChangesBufs = true,
+		ignoreSpecialBuftypes = true,
+		ignoreVisibleBufs = true,
+		ignoreUnloadedBufs = false,
+		ignoreFilenamePattern = "",
+	}
+	config = vim.tbl_deep_extend("keep", config, defaultConfig)
 
-	local timer = vim.loop.new_timer() -- https://neovim.io/doc/user/luvref.html#uv.new_timer()
+	-- https://neovim.io/doc/user/luvref.html#uv.new_timer()
+	local timer = vim.loop.new_timer() 
 	if not timer then return end
-	timer:start(retirementAgeMins * 60000, 10000, vim.schedule_wrap(checkOutdatedBuffer)) -- schedule wrapper required for timers
+	-- schedule_wrap required for timers
+	timer:start(config.retirementAgeMins * 60000, 10000, vim.schedule_wrap(function ()
+		checkOutdatedBuffer(config)
+	end))
 end
 
 --------------------------------------------------------------------------------
