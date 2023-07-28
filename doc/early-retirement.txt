@@ -12,6 +12,8 @@ Table of Contents                         *early-retirement-table-of-contents*
 ==============================================================================
 1. nvim-early-retirement             *early-retirement-nvim-early-retirement-*
 
+
+
 Send buffers into early retirement by automatically closing them after x
 minutes of inactivity.
 
