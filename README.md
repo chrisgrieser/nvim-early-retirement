@@ -1,5 +1,7 @@
 <!-- LTeX: enabled=false -->
 # nvim-early-retirement 👴👵 <!-- LTeX: enabled=true -->
+<a href="https://dotfyle.com/plugins/chrisgrieser/nvim-early-retirement"><img src="https://dotfyle.com/plugins/chrisgrieser/nvim-early-retirement/shield" /></a>
+
 Send buffers into early retirement by automatically closing them after x minutes of inactivity.
 
 Makes the bufferline or `:bnext` less crowded.
