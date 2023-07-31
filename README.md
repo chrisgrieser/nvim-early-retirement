@@ -41,16 +41,15 @@ opts = {
 	-- filetypes to ignore
 	ignoredFiletypes = {},
 
-	-- ignore files matches this lua pattern (string.find); empty string 
-	-- disables this setting
+	-- ignore files matching this lua pattern; empty string disables this setting
 	ignoreFilenamePattern = "";
 
 	-- will not close the alternate file
 	ignoreAltFile = true,
 
-	-- minimum number of open buffers for auto-closing to become active, e.g.,
+	-- minimum number of open buffers for auto-closing to become active. E.g.,
 	-- by setting this to 4, no auto-closing will take place when you have 3 
-	-- or less open buffers. Note that this plugin never closes the currently 
+	-- or fewer open buffers. Note that this plugin never closes the currently 
 	-- active buffer, so a number < 2 will effectively disable this setting.
 	minimumBufferNum = 1, 
 
@@ -61,25 +60,21 @@ opts = {
 	-- ignore non-empty buftypes, for example terminal buffers
 	ignoreSpecialBuftypes = true,
 
-	-- ignore visible buffers ("a" in `:buffers`). buffers open in a window, 
-	-- or in a tab are consider visible by vim
+	-- ignore visible buffers ("a" in `:buffers`). Buffers that are open in
+	-- a window or in a tab are considered visible by vim.
 	ignoreVisibleBufs = true,
 
-	-- ignore unloaded buffers. session-management plugin often add buffers
-	-- to the buffer list without loading them
+	-- ignore unloaded buffers. Session-management plugin often add buffers
+	-- to the buffer list without loading them.
 	ignoreUnloadedBufs = false,
 
-	-- uses vim.notify for plugins like nvim-notify
+	-- Show notification on closing. Works with nvim-notify or noice.nvim
 	notificationOnAutoClose = false,
 }
 ```
 
 ## Similar Plugins
-<!-- vale Vale.Spelling = NO -->
-<!-- LTeX: enabled=false -->
 - Close unedited files: [hbac](https://github.com/axkirillov/hbac.nvim)
-<!-- LTeX: enabled=true -->
-<!-- vale Vale.Spelling = YES -->
 
 ## Credits
 __Thanks__  
