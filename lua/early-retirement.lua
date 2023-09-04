@@ -34,7 +34,7 @@ local function checkOutdatedBuffer(c)
 		then
 			if c.notificationOnAutoClose then
 				local filename = vim.fs.basename(buf.name)
-				vim.notify("Auto-Closing Buffer:\n" .. filename)
+				vim.notify(filename, vim.log.levels.INFO, { title = "Auto-Closing Buffer" })
 			end
 
 			if isModified then vim.cmd.write() end
