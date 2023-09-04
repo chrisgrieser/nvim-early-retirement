@@ -1,4 +1,4 @@
-*early-retirement.txt*        For NVIM v0.8.0        Last change: 2023 July 31
+*early-retirement.txt*      For NVIM v0.8.0     Last change: 2023 September 04
 
 ==============================================================================
 Table of Contents                         *early-retirement-table-of-contents*
