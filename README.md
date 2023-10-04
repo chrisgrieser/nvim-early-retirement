@@ -1,5 +1,5 @@
 <!-- LTeX: enabled=false -->
-# nvim-early-retirement 👴👵 
+# nvim-early-retirement 👴👵
 <!-- LTeX: enabled=true -->
 <a href="https://dotfyle.com/plugins/chrisgrieser/nvim-early-retirement"><img src="https://dotfyle.com/plugins/chrisgrieser/nvim-early-retirement/shield" /></a>
 
@@ -7,12 +7,12 @@ Send buffers into early retirement by automatically closing them after x minutes
 
 Makes the bufferline or `:bnext` less crowded.
 
-<!--toc:start-->
+<!-- toc -->
 - [Installation](#installation)
 - [Configuration](#configuration)
-- [Credits](#credits)
 - [Similar Plugins](#similar-plugins)
-<!--toc:end-->
+- [Credits](#credits)
+<!-- tocstop -->
 
 ## Installation
 
@@ -31,11 +31,11 @@ use {
 },
 ```
 
+
 ## Configuration
 
 ```lua
--- default values
-opts = {
+defaultOpts = {
 	-- if a buffer has been inactive for this many minutes, close it
 	retirementAgeMins = 20,
 
@@ -43,16 +43,16 @@ opts = {
 	ignoredFiletypes = {},
 
 	-- ignore files matching this lua pattern; empty string disables this setting
-	ignoreFilenamePattern = "";
+	ignoreFilenamePattern = "",
 
 	-- will not close the alternate file
 	ignoreAltFile = true,
 
 	-- minimum number of open buffers for auto-closing to become active. E.g.,
-	-- by setting this to 4, no auto-closing will take place when you have 3 
-	-- or fewer open buffers. Note that this plugin never closes the currently 
+	-- by setting this to 4, no auto-closing will take place when you have 3
+	-- or fewer open buffers. Note that this plugin never closes the currently
 	-- active buffer, so a number < 2 will effectively disable this setting.
-	minimumBufferNum = 1, 
+	minimumBufferNum = 1,
 
 	-- will ignore buffers with unsaved changes. If false, the buffers will
 	-- automatically be written and then closed.
@@ -72,7 +72,7 @@ opts = {
 	-- Show notification on closing. Works with nvim-notify or noice.nvim
 	notificationOnAutoClose = false,
 
-	-- when a file is deleted, for example via an external program, delete the 
+	-- when a file is deleted, for example via an external program, delete the
 	-- associated buffer as well
 	deleteBufferWhenFileDeleted = false,
 }
