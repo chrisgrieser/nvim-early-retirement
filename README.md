@@ -1,5 +1,6 @@
 <!-- LTeX: enabled=false -->
-# nvim-early-retirement 👴👵 <!-- LTeX: enabled=true -->
+# nvim-early-retirement 👴👵 
+<!-- LTeX: enabled=true -->
 <a href="https://dotfyle.com/plugins/chrisgrieser/nvim-early-retirement"><img src="https://dotfyle.com/plugins/chrisgrieser/nvim-early-retirement/shield" /></a>
 
 Send buffers into early retirement by automatically closing them after x minutes of inactivity.
@@ -70,6 +71,10 @@ opts = {
 
 	-- Show notification on closing. Works with nvim-notify or noice.nvim
 	notificationOnAutoClose = false,
+
+	-- when a file is deleted, for example via an external program, delete the 
+	-- associated buffer as well
+	deleteBufferWhenFileDeleted = false,
 }
 ```
 

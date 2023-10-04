@@ -3,6 +3,24 @@ local bufOpt = vim.api.nvim_buf_get_option
 
 --------------------------------------------------------------------------------
 
+local function deleteBufferWhenFileDeleted()
+	vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter" }, {
+		callback = function()
+			local fileExists = vim.loop.fs_stat(vim.fn.expand("%:p")) ~= nil
+			local specialBuffer = vim.bo.buftype ~= ""
+			if not fileExists and not specialBuffer then
+				local filename = vim.fs.basename(vim.api.nvim_buf_get_name(0))
+				vim.notify(
+					("%s does not exist anymore, deleting buffer."):format(filename),
+					vim.log.levels.INFO,
+					{ title = "Closing Buffer" }
+				)
+				vim.cmd.bdelete()
+			end
+		end,
+	})
+end
+
 ---@param c opts effective config
 local function checkOutdatedBuffer(c)
 	local openBuffers = vim.fn.getbufinfo { buflisted = 1 } -- https://neovim.io/doc/user/builtin.html#getbufinfo
@@ -56,6 +74,7 @@ end
 ---@field ignoreUnloadedBufs boolean session plugins often add buffers without unloading them
 ---@field minimumBufferNum number minimum number of open buffers for auto-closing to become active
 ---@field ignoreFilenamePattern string ignore files matches this lua pattern (string.find)
+---@field deleteBufferWhenFileDeleted boolean
 
 ---@param userConfig opts
 function M.setup(userConfig)
@@ -70,10 +89,10 @@ function M.setup(userConfig)
 		ignoreVisibleBufs = true,
 		ignoreUnloadedBufs = false,
 		ignoreFilenamePattern = "",
+		deleteBufferWhenFileDeleted = false,
 	}
 	local config = vim.tbl_deep_extend("keep", userConfig, defaultConfig)
 
-	-- https://neovim.io/doc/user/luvref.html#uv.new_timer()
 	local timer = vim.loop.new_timer()
 	timer:start(
 		config.retirementAgeMins * 60000,
@@ -81,6 +100,8 @@ function M.setup(userConfig)
 		-- schedule_wrap required for timers
 		vim.schedule_wrap(function() checkOutdatedBuffer(config) end)
 	)
+
+	if config.deleteBufferWhenFileDeleted then deleteBufferWhenFileDeleted() end
 end
 
 --------------------------------------------------------------------------------
