@@ -57,8 +57,8 @@ end
 ---@field minimumBufferNum number minimum number of open buffers for auto-closing to become active
 ---@field ignoreFilenamePattern string ignore files matches this lua pattern (string.find)
 
----@param config opts
-function M.setup(config)
+---@param userConfig opts
+function M.setup(userConfig)
 	local defaultConfig = {
 		retirementAgeMins = 20,
 		ignoredFiletypes = { "lazy" },
@@ -71,15 +71,16 @@ function M.setup(config)
 		ignoreUnloadedBufs = false,
 		ignoreFilenamePattern = "",
 	}
-	config = vim.tbl_deep_extend("keep", config, defaultConfig)
+	local config = vim.tbl_deep_extend("keep", userConfig, defaultConfig)
 
 	-- https://neovim.io/doc/user/luvref.html#uv.new_timer()
-	local timer = vim.loop.new_timer() 
-	if not timer then return end
-	-- schedule_wrap required for timers
-	timer:start(config.retirementAgeMins * 60000, 10000, vim.schedule_wrap(function ()
-		checkOutdatedBuffer(config)
-	end))
+	local timer = vim.loop.new_timer()
+	timer:start(
+		config.retirementAgeMins * 60000,
+		10000,
+		-- schedule_wrap required for timers
+		vim.schedule_wrap(function() checkOutdatedBuffer(config) end)
+	)
 end
 
 --------------------------------------------------------------------------------
