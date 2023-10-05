@@ -4,19 +4,25 @@ local bufOpt = vim.api.nvim_buf_get_option
 --------------------------------------------------------------------------------
 
 local function deleteBufferWhenFileDeleted()
-	vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter" }, {
-		callback = function()
-			local fileExists = vim.loop.fs_stat(vim.fn.expand("%:p")) ~= nil
-			local specialBuffer = vim.bo.buftype ~= ""
-			if not fileExists and not specialBuffer then
-				local filename = vim.fs.basename(vim.api.nvim_buf_get_name(0))
+	vim.api.nvim_create_autocmd({ "BufEnter", "FocusGained" }, {
+		callback = function(ctx)
+			local bufname = ctx.file
+			local bufnr = ctx.buf
+
+			-- deferred to not interfere with new buffers
+			vim.defer_fn(function()
+				local fileExists = vim.loop.fs_stat(bufname) ~= nil
+				local specialBuffer = vim.bo.buftype ~= ""
+				local newBuffer = bufname == ""
+				if fileExists or specialBuffer or newBuffer then return end
+
 				vim.notify(
-					("%s does not exist anymore, deleting buffer."):format(filename),
+					("%s does not exist anymore, deleting buffer."):format(vim.fs.basename(bufname)),
 					vim.log.levels.INFO,
 					{ title = "Closing Buffer" }
 				)
-				vim.cmd.bdelete()
-			end
+				vim.api.nvim_buf_delete(bufnr, { force = false, unload = false })
+			end, 100)
 		end,
 	})
 end
