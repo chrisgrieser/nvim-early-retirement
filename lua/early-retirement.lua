@@ -10,8 +10,11 @@ local function deleteBufferWhenFileDeleted()
 
 			-- deferred to not interfere with new buffers
 			vim.defer_fn(function()
+				-- buffer has been deleted in the meantime
+				if not vim.api.nvim_buf_is_valid(bufnr) then return end
+
 				local bufname = vim.api.nvim_buf_get_name(bufnr)
-				local isSpecialBuffer = vim.api.nvim_buf_get_option(bufnr, "buftype") ~= ""
+				local isSpecialBuffer = bufOpt(bufnr, "buftype") ~= ""
 				local fileExists = vim.loop.fs_stat(bufname) ~= nil
 				local isNewBuffer = bufname == ""
 				if fileExists or isSpecialBuffer or isNewBuffer then return end
