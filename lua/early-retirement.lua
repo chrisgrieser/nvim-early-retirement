@@ -39,36 +39,43 @@ local function checkOutdatedBuffer(c)
 		-- check all the conditions
 		local usedSecsAgo = os.time() - buf.lastused -- always 0 for current buffer, therefore it's never closed
 		local recentlyUsed = usedSecsAgo < c.retirementAgeMins * 60
+
 		local bufFt = bufOpt(buf.bufnr, "filetype")
 		local isIgnoredFt = vim.tbl_contains(c.ignoredFiletypes, bufFt)
-		local isIgnoredSpecialBuffer = bufOpt(buf.bufnr, "buftype") ~= "" and c.ignoreSpecialBuftypes
-		local isIgnoredAltFile = (buf.name == vim.fn.expand("#:p")) and c.ignoreAltFile
+
 		local isModified = bufOpt(buf.bufnr, "modified")
 		local isIgnoredUnsavedBuf = isModified and c.ignoreUnsavedChangesBufs
+
+		local isIgnoredSpecialBuffer = bufOpt(buf.bufnr, "buftype") ~= "" and c.ignoreSpecialBuftypes
+		local isIgnoredAltFile = (buf.name == vim.fn.expand("#:p")) and c.ignoreAltFile
 		local isIgnoredVisibleBuf = buf.hidden == 0 and buf.loaded == 1 and c.ignoreVisibleBufs
 		local isIgnoredUnloadedBuf = buf.loaded == 0 and c.ignoreUnloadedBufs
 		local isIgnoredFilename = c.ignoreFilenamePattern ~= "" and buf.name:find(c.ignoreFilenamePattern)
 
+		-- GUARD against any of the conditions
 		if
-			not recentlyUsed
-			and not isIgnoredFt
-			and not isIgnoredSpecialBuffer
-			and not isIgnoredAltFile
-			and not isIgnoredUnsavedBuf
-			and not isIgnoredVisibleBuf
-			and not isIgnoredUnloadedBuf
-			and not isIgnoredFilename
+			recentlyUsed
+			or isIgnoredFt
+			or isIgnoredSpecialBuffer
+			or isIgnoredAltFile
+			or isIgnoredUnsavedBuf
+			or isIgnoredVisibleBuf
+			or isIgnoredUnloadedBuf
+			or isIgnoredFilename
 		then
-			if c.notificationOnAutoClose then
-				local filename = vim.fs.basename(buf.name)
-				vim.notify(filename, vim.log.levels.INFO, { title = "Auto-Closing Buffer" })
-			end
-
-			if isModified and not c.ignoreUnsavedChangesBufs then
-				vim.api.nvim_buf_call(buf.bufnr, vim.cmd.write)
-			end
-			vim.api.nvim_buf_delete(buf.bufnr, { force = false, unload = false })
+			return
 		end
+
+		-- close buffer
+		if c.notificationOnAutoClose then
+			local filename = vim.fs.basename(buf.name)
+			vim.notify(filename, vim.log.levels.INFO, { title = "Auto-Closing Buffer" })
+		end
+
+		if isModified and not c.ignoreUnsavedChangesBufs then
+			vim.api.nvim_buf_call(buf.bufnr, vim.cmd.write)
+		end
+		vim.api.nvim_buf_delete(buf.bufnr, { force = false, unload = false })
 	end
 end
 
