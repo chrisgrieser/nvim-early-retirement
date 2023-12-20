@@ -1,17 +1,21 @@
 <!-- LTeX: enabled=false -->
 # nvim-early-retirement 👴👵
 <!-- LTeX: enabled=true -->
-<a href="https://dotfyle.com/plugins/chrisgrieser/nvim-early-retirement"><img src="https://dotfyle.com/plugins/chrisgrieser/nvim-early-retirement/shield" /></a>
+<a href="https://dotfyle.com/plugins/chrisgrieser/nvim-early-retirement">
+<img alt="badge" src="https://dotfyle.com/plugins/chrisgrieser/nvim-early-retirement/shield"/></a>
 
-Send buffers into early retirement by automatically closing them after x minutes of inactivity.
+Send buffers into early retirement by automatically closing them after x minutes
+of inactivity.
 
 Makes the bufferline or `:bnext` less crowded.
 
 <!-- toc -->
+
 - [Installation](#installation)
 - [Configuration](#configuration)
 - [Similar Plugins](#similar-plugins)
 - [Credits](#credits)
+
 <!-- tocstop -->
 
 ## Installation
@@ -30,7 +34,6 @@ use {
 	event = "VeryLazy",
 },
 ```
-
 
 ## Configuration
 
@@ -69,11 +72,12 @@ defaultOpts = {
 	-- to the buffer list without loading them.
 	ignoreUnloadedBufs = false,
 
-	-- Show notification on closing. Works with nvim-notify or noice.nvim
+	-- Show notification on closing. Works with plugins like nvim-notify.
 	notificationOnAutoClose = false,
 
-	-- when a file is deleted, for example via an external program, delete the
-	-- associated buffer as well
+	-- When a file is deleted, for example via an external program, delete the
+	-- associated buffer as well. (This feature is independent from the automatic
+	-- closing of `nvim-early-retirement`.)
 	deleteBufferWhenFileDeleted = false,
 }
 ```
@@ -87,7 +91,10 @@ To `@nikfp` and `@xorg-dogma` on Discord for their help.
 
 <!-- vale Google.FirstPerson = NO -->
 __About Me__  
-In my day job, I am a sociologist studying the social mechanisms underlying the digital economy. For my PhD project, I investigate the governance of the app economy and how software ecosystems manage the tension between innovation and compatibility. If you are interested in this subject, feel free to get in touch.
+In my day job, I am a sociologist studying the social mechanisms underlying the
+digital economy. For my PhD project, I investigate the governance of the app
+economy and how software ecosystems manage the tension between innovation and
+compatibility. If you are interested in this subject, feel free to get in touch.
 
 __Blog__  
 I also occasionally blog about vim: [Nano Tips for Vim](https://nanotipsforvim.prose.sh)
@@ -100,6 +107,10 @@ __Profiles__
 - [ResearchGate](https://www.researchgate.net/profile/Christopher-Grieser)
 - [LinkedIn](https://www.linkedin.com/in/christopher-grieser-ba693b17a/)
 
-__Buy Me a Coffee__  
-<br>
-<a href='https://ko-fi.com/Y8Y86SQ91' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://cdn.ko-fi.com/cdn/kofi1.png?v=3' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
+<a href='https://ko-fi.com/Y8Y86SQ91' target='_blank'><img
+	height='36'
+	style='border:0px;height:36px;'
+	src='https://cdn.ko-fi.com/cdn/kofi1.png?v=3'
+	border='0'
+	alt='Buy Me a Coffee at ko-fi.com'
+/></a>
