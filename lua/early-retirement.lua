@@ -105,9 +105,10 @@ function M.setup(userConfig)
 	local config = vim.tbl_deep_extend("keep", userConfig, defaultConfig)
 
 	local timer = vim.loop.new_timer()
+	local checkingIntervalSecs = 30
 	timer:start(
 		config.retirementAgeMins * 60000,
-		10000,
+		checkingIntervalSecs * 1000,
 		-- schedule_wrap required for timers
 		vim.schedule_wrap(function() checkOutdatedBuffer(config) end)
 	)
