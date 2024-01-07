@@ -1,6 +1,9 @@
 local M = {}
 local bufOpt = vim.api.nvim_buf_get_option
 
+---@param msg string
+local function notify(msg) vim.notify(msg, vim.log.levels.INFO, { title = "early-retirement" }) end
+
 --------------------------------------------------------------------------------
 
 local function deleteBufferWhenFileDeleted()
@@ -20,11 +23,7 @@ local function deleteBufferWhenFileDeleted()
 				local notListed = not bufOpt(bufnr, "buflisted")
 				if fileExists or isSpecialBuffer or isNewBuffer or notListed then return end
 
-				vim.notify(
-					("%s does not exist anymore."):format(vim.fs.basename(bufname)),
-					vim.log.levels.INFO,
-					{ title = "Closing Buffer" }
-				)
+				notify(("Closing %q as file does not exist anymore."):format(vim.fs.basename(bufname)))
 				vim.api.nvim_buf_delete(bufnr, { force = false, unload = false })
 			end, 100)
 		end,
@@ -51,7 +50,8 @@ local function checkOutdatedBuffer(c)
 		local isIgnoredAltFile = (buf.name == vim.fn.expand("#:p")) and c.ignoreAltFile
 		local isIgnoredVisibleBuf = buf.hidden == 0 and buf.loaded == 1 and c.ignoreVisibleBufs
 		local isIgnoredUnloadedBuf = buf.loaded == 0 and c.ignoreUnloadedBufs
-		local isIgnoredFilename = c.ignoreFilenamePattern ~= "" and buf.name:find(c.ignoreFilenamePattern)
+		local isIgnoredFilename = c.ignoreFilenamePattern ~= ""
+			and buf.name:find(c.ignoreFilenamePattern)
 
 		-- GUARD against any of the conditions
 		if
@@ -70,8 +70,7 @@ local function checkOutdatedBuffer(c)
 		-- close buffer
 		if c.notificationOnAutoClose then
 			local filename = vim.fs.basename(buf.name)
-			local msg = ("Auto-closing %q"):format(filename)
-			vim.notify(msg, vim.log.levels.INFO, { title = "nvim-early-retirement" })
+			notify(("Auto-closing %q"):format(filename))
 		end
 
 		if isModified and not c.ignoreUnsavedChangesBufs then
