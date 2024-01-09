@@ -20,8 +20,7 @@ local function deleteBufferWhenFileDeleted()
 				local isSpecialBuffer = bufOpt(bufnr, "buftype") ~= ""
 				local fileExists = vim.loop.fs_stat(bufname) ~= nil
 				local isNewBuffer = bufname == ""
-				local isNotListed = not bufOpt(bufnr, "buflisted")
-				if fileExists or isSpecialBuffer or isNewBuffer or isNotListed then return end
+				if fileExists or isSpecialBuffer or isNewBuffer then return end
 
 				notify(("Closing %q as file does not exist anymore."):format(vim.fs.basename(bufname)))
 				vim.api.nvim_buf_delete(bufnr, { force = false, unload = false })
