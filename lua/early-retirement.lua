@@ -20,9 +20,13 @@ local function deleteBufferWhenFileDeleted()
 				local isSpecialBuffer = bufOpt(bufnr, "buftype") ~= ""
 				local fileExists = vim.loop.fs_stat(bufname) ~= nil
 				local isNewBuffer = bufname == ""
-				if fileExists or isSpecialBuffer or isNewBuffer then return end
+				-- prevent the temporary buffers from conform.nvim's "injected"
+				-- formatter to be closed by this. (filename is like "README.md.5.lua")
+				local conformTempBuf = bufname:find("%.md%.%d+%.%l+$")
 
-				notify(("Closing %q as file does not exist anymore."):format(vim.fs.basename(bufname)))
+				if fileExists or isSpecialBuffer or isNewBuffer or conformTempBuf then return end
+
+				notify(("Closing %q, file does not exist anymore."):format(vim.fs.basename(bufname)))
 				vim.api.nvim_buf_delete(bufnr, { force = false, unload = false })
 			end, 100)
 		end,
