@@ -26,7 +26,7 @@ local function deleteBufferWhenFileDeleted()
 
 				if fileExists or isSpecialBuffer or isNewBuffer or conformTempBuf then return end
 
-				notify(("Closing %q, file does not exist anymore."):format(vim.fs.basename(bufname)))
+				notify(("%q does not exist anymore. Closing."):format(vim.fs.basename(bufname)))
 				vim.api.nvim_buf_delete(bufnr, { force = false, unload = false })
 			end, 100)
 		end,
