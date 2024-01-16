@@ -11,8 +11,8 @@ local function deleteBufferWhenFileDeleted()
 		callback = function(ctx)
 			local bufnr = ctx.buf
 
-			local _, isManuallyIgnored =
-				pcall(vim.api.nvim_buf_get_var, bufnr, "ignore_early_retirement")
+			local isSet, setTrue = pcall(vim.api.nvim_buf_get_var, bufnr, "ignore_early_retirement")
+			local isManuallyIgnored = isSet and setTrue
 			if isManuallyIgnored then return end
 
 			-- deferred to not interfere with new buffers
@@ -59,8 +59,8 @@ local function checkOutdatedBuffer(c)
 		local isIgnoredUnloadedBuf = buf.loaded == 0 and c.ignoreUnloadedBufs
 		local isIgnoredFilename = c.ignoreFilenamePattern ~= ""
 			and buf.name:find(c.ignoreFilenamePattern)
-		local _, isManuallyIgnored =
-			pcall(vim.api.nvim_buf_get_var, buf.bufnr, "ignore_early_retirement")
+		local isSet, setTrue = pcall(vim.api.nvim_buf_get_var, buf.bufnr, "ignore_early_retirement")
+		local isManuallyIgnored = isSet and setTrue
 
 		-- GUARD against any of the conditions
 		if
