@@ -82,6 +82,10 @@ defaultOpts = {
 }
 ```
 
+> [!NOTE]
+> You can also have `nvim-early-retirement` ignore certain buffers by setting
+> `vim.b.ignore_early_retirement = true`.
+
 ## Similar Plugins
 - Close unedited files: [hbac](https://github.com/axkirillov/hbac.nvim)
 
