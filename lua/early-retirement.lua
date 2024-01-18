@@ -74,7 +74,7 @@ local function checkOutdatedBuffer(c)
 			or isIgnoredFilename
 			or isManuallyIgnored
 		then
-			return
+			goto continue
 		end
 
 		-- close buffer
@@ -87,6 +87,8 @@ local function checkOutdatedBuffer(c)
 			vim.api.nvim_buf_call(buf.bufnr, vim.cmd.write)
 		end
 		vim.api.nvim_buf_delete(buf.bufnr, { force = false, unload = false })
+
+		::continue::
 	end
 end
 
