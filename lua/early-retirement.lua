@@ -7,7 +7,8 @@ local function notify(msg) vim.notify(msg, vim.log.levels.INFO, { title = "early
 --------------------------------------------------------------------------------
 
 local function deleteBufferWhenFileDeleted()
-	vim.api.nvim_create_autocmd({ "BufEnter", "FocusGained" }, {
+	-- INFO also trigger on `QuickFixCmdPost`, in case a make command deletes file
+	vim.api.nvim_create_autocmd({ "BufEnter", "FocusGained", "QuickFixCmdPost" }, {
 		callback = function(ctx)
 			local bufnr = ctx.buf
 
