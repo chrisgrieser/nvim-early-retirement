@@ -1,5 +1,13 @@
 local M = {}
-local bufOpt = vim.api.nvim_buf_get_option
+
+local function bufOpt(bufnr, opt)
+	if vim.api.nvim_get_option_value ~= nil then
+		---@diagnostic disable-next-line: deprecated -- backwards compatibility
+		return vim.api.nvim_buf_get_option(bufnr, opt)
+	else
+		return vim.api.nvim_get_option_value(opt, { buf = bufnr })
+	end
+end
 
 ---@param msg string
 local function notify(msg) vim.notify(msg, vim.log.levels.INFO, { title = "early-retirement" }) end
