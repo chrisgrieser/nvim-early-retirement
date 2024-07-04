@@ -2,7 +2,7 @@ local M = {}
 local uv = vim.uv or vim.loop -- backwards compatibility with neovim <= 0.9
 
 local function bufOpt(bufnr, opt)
-	if vim.api.nvim_get_option_value ~= nil then
+	if vim.api.nvim_get_option_value then
 		return vim.api.nvim_get_option_value(opt, { buf = bufnr })
 	else
 		---@diagnostic disable-next-line: deprecated -- backwards compatibility
@@ -11,38 +11,50 @@ local function bufOpt(bufnr, opt)
 end
 
 ---@param msg string
-local function notify(msg) vim.notify(msg, vim.log.levels.INFO, { title = "early-retirement" }) end
+---@param level? "info"|"trace"|"debug"|"warn"|"error"
+local function notify(msg, level)
+	local notifyLevel = level and vim.log.levels[level:upper()] or vim.log.levels.INFO
+	vim.notify(msg, notifyLevel, { title = "early-retirement" })
+end
 
 --------------------------------------------------------------------------------
 
 local function deleteBufferWhenFileDeleted()
-	-- INFO also trigger on `QuickFixCmdPost`, in case a make command deletes file
-	vim.api.nvim_create_autocmd({ "BufEnter", "FocusGained", "QuickFixCmdPost" }, {
-		callback = function(ctx)
-			local bufnr = ctx.buf
+	local version = vim.version()
+	if version.major == 0 and version.minor < 10 then
+		notify("`deleteBufferWhenFileDeleted` requires at least nvim 0.10.", "warn")
+		return
+	end
 
-			local isSet, setTrue = pcall(vim.api.nvim_buf_get_var, bufnr, "ignore_early_retirement")
-			local isManuallyIgnored = isSet and setTrue
-			if isManuallyIgnored then return end
+	vim.api.nvim_create_autocmd("FocusGained", {
+		callback = function()
+			local closedBuffers = {}
+			vim.iter(vim.api.nvim_list_bufs())
+				:filter(function(bufnr)
+					local valid = vim.api.nvim_buf_is_valid(bufnr)
+					local loaded = vim.api.nvim_buf_is_loaded(bufnr)
+					return valid and loaded
+				end)
+				:filter(function(bufnr)
+					local bufPath = vim.api.nvim_buf_get_name(bufnr)
+					local doesNotExist = uv.fs_stat(bufPath) == nil
+					local notSpecialBuffer = vim.bo[bufnr].buftype == ""
+					local notNewBuffer = bufPath ~= ""
+					return doesNotExist and notSpecialBuffer and notNewBuffer
+				end)
+				:each(function(bufnr)
+					local bufName = vim.fs.basename(vim.api.nvim_buf_get_name(bufnr))
+					table.insert(closedBuffers, bufName)
+					vim.api.nvim_buf_delete(bufnr, { force = true })
+				end)
+			if #closedBuffers == 0 then return end
 
-			-- deferred to not interfere with new buffers
-			vim.defer_fn(function()
-				-- buffer has been deleted in the meantime
-				if not vim.api.nvim_buf_is_valid(bufnr) then return end
-
-				local bufname = vim.api.nvim_buf_get_name(bufnr)
-				local isSpecialBuffer = bufOpt(bufnr, "buftype") ~= ""
-				local fileExists = uv.fs_stat(bufname) ~= nil
-				local isNewBuffer = bufname == ""
-				-- prevent the temporary buffers from conform.nvim's "injected"
-				-- formatter to be closed by this. (filename is like "README.md.5.lua")
-				local conformTempBuf = bufname:find("%.md%.%d+%.%l+$")
-
-				if fileExists or isSpecialBuffer or isNewBuffer or conformTempBuf then return end
-
-				notify(("%q does not exist anymore. Closing."):format(vim.fs.basename(bufname)))
-				vim.api.nvim_buf_delete(bufnr, { force = false, unload = false })
-			end, 100)
+			if #closedBuffers == 1 then
+				notify("Buffer closed: " .. closedBuffers[1])
+			else
+				local text = "- " .. table.concat(closedBuffers, "\n- ")
+				notify("Buffers closed:\n" .. text)
+			end
 		end,
 	})
 end
