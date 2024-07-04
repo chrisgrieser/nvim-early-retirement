@@ -1,11 +1,12 @@
 local M = {}
+local uv = vim.uv or vim.loop -- backwards compatibility with neovim <= 0.9
 
 local function bufOpt(bufnr, opt)
 	if vim.api.nvim_get_option_value ~= nil then
+		return vim.api.nvim_get_option_value(opt, { buf = bufnr })
+	else
 		---@diagnostic disable-next-line: deprecated -- backwards compatibility
 		return vim.api.nvim_buf_get_option(bufnr, opt)
-	else
-		return vim.api.nvim_get_option_value(opt, { buf = bufnr })
 	end
 end
 
@@ -31,7 +32,7 @@ local function deleteBufferWhenFileDeleted()
 
 				local bufname = vim.api.nvim_buf_get_name(bufnr)
 				local isSpecialBuffer = bufOpt(bufnr, "buftype") ~= ""
-				local fileExists = vim.loop.fs_stat(bufname) ~= nil
+				local fileExists = uv.fs_stat(bufname) ~= nil
 				local isNewBuffer = bufname == ""
 				-- prevent the temporary buffers from conform.nvim's "injected"
 				-- formatter to be closed by this. (filename is like "README.md.5.lua")
@@ -133,7 +134,7 @@ function M.setup(userConfig)
 	}
 	local config = vim.tbl_deep_extend("keep", userConfig, defaultConfig)
 
-	local timer = vim.loop.new_timer()
+	local timer = uv.new_timer()
 	local checkingIntervalSecs = 30
 	timer:start(
 		config.retirementAgeMins * 60000,
