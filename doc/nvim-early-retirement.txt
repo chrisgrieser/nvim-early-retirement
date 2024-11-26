@@ -1,6 +1,15 @@
 *nvim-early-retirement.txt*      For Neovim      Last change: 2024 November 26
 
 ==============================================================================
+Table of Contents                    *nvim-early-retirement-table-of-contents*
+
+1. nvim-early-retirement        |nvim-early-retirement-nvim-early-retirement-|
+  - Installation   |nvim-early-retirement-nvim-early-retirement--installation|
+  - Configuration |nvim-early-retirement-nvim-early-retirement--configuration|
+  - Similar Plugins|nvim-early-retirement-nvim-early-retirement--similar-plugins|
+  - Credits             |nvim-early-retirement-nvim-early-retirement--credits|
+
+==============================================================================
 1. nvim-early-retirement        *nvim-early-retirement-nvim-early-retirement-*
 
 
