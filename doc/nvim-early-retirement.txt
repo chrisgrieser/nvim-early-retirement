@@ -1,4 +1,4 @@
-*nvim-early-retirement.txt*      For Neovim      Last change: 2024 November 26
+*nvim-early-retirement.txt*      For Neovim      Last change: 2024 December 01
 
 ==============================================================================
 Table of Contents                    *nvim-early-retirement-table-of-contents*
@@ -87,6 +87,11 @@ CONFIGURATION     *nvim-early-retirement-nvim-early-retirement--configuration*
         -- associated buffer as well. Requires Neovim >= 0.10.
         -- (This feature is independent from the automatic closing)
         deleteBufferWhenFileDeleted = false,
+    
+        -- Function to delete the buffer. The argument provided to the function is
+        -- the buffer number. If nothing is provided the plugin will just call
+        -- nvim_buf_delete.
+        deleteFunction = nil,
     }
 <
 
