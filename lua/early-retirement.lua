@@ -108,7 +108,11 @@ local function checkOutdatedBuffer(c)
 		if isModified and not c.ignoreUnsavedChangesBufs then
 			vim.api.nvim_buf_call(buf.bufnr, vim.cmd.write)
 		end
-		vim.api.nvim_buf_delete(buf.bufnr, { force = false, unload = false })
+    if c.deleteFunction then
+      c.deleteFunction(buf.bufnr)
+    else
+      vim.api.nvim_buf_delete(buf.bufnr, { force = false, unload = false })
+    end
 
 		::continue::
 	end
@@ -128,6 +132,7 @@ end
 ---@field minimumBufferNum number minimum number of open buffers for auto-closing to become active
 ---@field ignoreFilenamePattern string ignore files matches this lua pattern (string.find)
 ---@field deleteBufferWhenFileDeleted boolean
+---@field deleteFunction function
 
 ---@param userConfig opts
 function M.setup(userConfig)

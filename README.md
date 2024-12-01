@@ -79,6 +79,11 @@ defaultOpts = {
 	-- associated buffer as well. Requires Neovim >= 0.10.
 	-- (This feature is independent from the automatic closing)
 	deleteBufferWhenFileDeleted = false,
+
+	-- Function to delete the buffer. The argument provided to the function is
+	-- the buffer number. If nothing is provided the plugin will just call
+	-- nvim_buf_delete.
+	deleteFunction = nil,
 }
 ```
 
