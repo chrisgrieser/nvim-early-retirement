@@ -108,11 +108,11 @@ local function checkOutdatedBuffer(c)
 		if isModified and not c.ignoreUnsavedChangesBufs then
 			vim.api.nvim_buf_call(buf.bufnr, vim.cmd.write)
 		end
-    if c.deleteFunction then
-      c.deleteFunction(buf.bufnr)
-    else
-      vim.api.nvim_buf_delete(buf.bufnr, { force = false, unload = false })
-    end
+		if c.deleteFunction then
+			c.deleteFunction(buf.bufnr)
+		else
+			vim.api.nvim_buf_delete(buf.bufnr, { force = false, unload = false })
+		end
 
 		::continue::
 	end
