@@ -151,7 +151,7 @@ function M.setup(userConfig)
 	}
 	local config = vim.tbl_deep_extend("keep", userConfig, defaultConfig)
 
-	local timer = uv.new_timer()
+	local timer = assert(uv.new_timer(), "Timer creation failed.")
 	local checkingIntervalSecs = 30
 	timer:start(
 		config.retirementAgeMins * 60000,
