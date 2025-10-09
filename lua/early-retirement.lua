@@ -81,12 +81,19 @@ local function checkOutdatedBuffer(c)
 		local isIgnoredUnloadedBuf = buf.loaded == 0 and c.ignoreUnloadedBufs
 		local isIgnoredFilename = c.ignoreFilenamePattern ~= ""
 			and buf.name:find(c.ignoreFilenamePattern)
+
+		-- #20
+		local isQuickFixBuffer = vim.iter(vim.fn.getqflist())
+			:map(function(entry) return entry.bufnr end)
+			:find(buf.bufnr)
+
 		local isSet, setTrue = pcall(vim.api.nvim_buf_get_var, buf.bufnr, "ignore_early_retirement")
 		local isManuallyIgnored = isSet and setTrue
 
 		-- GUARD against any of the conditions
 		if
 			recentlyUsed
+			or isQuickFixBuffer
 			or isIgnoredFt
 			or isIgnoredSpecialBuffer
 			or isIgnoredAltFile
