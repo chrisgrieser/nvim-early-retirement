@@ -1,4 +1,5 @@
 <!-- LTeX: enabled=false -->
+
 # nvim-early-retirement 👴👵
 <!-- LTeX: enabled=true -->
 <a href="https://dotfyle.com/plugins/chrisgrieser/nvim-early-retirement">
@@ -95,17 +96,17 @@ defaultOpts = {
 - Close unedited files: [hbac](https://github.com/axkirillov/hbac.nvim)
 
 ## Credits
-__Thanks__  
+**Thanks**  
 To `@nikfp` and `@xorg-dogma` on Discord for their help.
 
 <!-- vale Google.FirstPerson = NO -->
-__About Me__  
+**About Me**  
 In my day job, I am a sociologist studying the social mechanisms underlying the
 digital economy. For my PhD project, I investigate the governance of the app
 economy and how software ecosystems manage the tension between innovation and
 compatibility. If you are interested in this subject, feel free to get in touch.
 
-__Profiles__  
+**Profiles**  
 - [Discord](https://discordapp.com/users/462774483044794368/)
 - [Academic Website](https://chris-grieser.de/)
 - [GitHub](https://github.com/chrisgrieser/)
