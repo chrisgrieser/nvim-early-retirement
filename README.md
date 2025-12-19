@@ -1,4 +1,4 @@
-# nvim-early-retirement 👴👵
+# nvim-early-retirement 👴👵 <!-- rumdl-disable-line MD063 `nvim` lowercased -->
 <a href="https://dotfyle.com/plugins/chrisgrieser/nvim-early-retirement">
 <img alt="badge" src="https://dotfyle.com/plugins/chrisgrieser/nvim-early-retirement/shield"/></a>
 
@@ -89,7 +89,7 @@ defaultOpts = {
 > You can also have `nvim-early-retirement` ignore certain buffers by setting
 > `vim.b.ignore_early_retirement = true`.
 
-## Similar Plugins
+## Similar plugins
 - Close unedited files: [hbac](https://github.com/axkirillov/hbac.nvim)
 
 ## Credits
