@@ -1,7 +1,4 @@
-<!-- LTeX: enabled=false -->
-
 # nvim-early-retirement 👴👵
-<!-- LTeX: enabled=true -->
 <a href="https://dotfyle.com/plugins/chrisgrieser/nvim-early-retirement">
 <img alt="badge" src="https://dotfyle.com/plugins/chrisgrieser/nvim-early-retirement/shield"/></a>
 
@@ -96,21 +93,17 @@ defaultOpts = {
 - Close unedited files: [hbac](https://github.com/axkirillov/hbac.nvim)
 
 ## Credits
-**Thanks**  
+**Thanks** <!-- rumdl-disable-line MD036 -->
 To `@nikfp` and `@xorg-dogma` on Discord for their help.
 
-<!-- vale Google.FirstPerson = NO -->
-**About Me**  
+**About Me** <!-- rumdl-disable-line MD036 -->
 In my day job, I am a sociologist studying the social mechanisms underlying the
 digital economy. For my PhD project, I investigate the governance of the app
 economy and how software ecosystems manage the tension between innovation and
 compatibility. If you are interested in this subject, feel free to get in touch.
 
-**Profiles**  
-- [Discord](https://discordapp.com/users/462774483044794368/)
-- [Academic Website](https://chris-grieser.de/)
-- [GitHub](https://github.com/chrisgrieser/)
-- [Twitter](https://twitter.com/pseudo_meta)
+- [Website](https://chris-grieser.de/)
+- [Mastodon](https://pkm.social/@pseudometa)
 - [ResearchGate](https://www.researchgate.net/profile/Christopher-Grieser)
 - [LinkedIn](https://www.linkedin.com/in/christopher-grieser-ba693b17a/)
 
