@@ -6,7 +6,7 @@ Table of Contents                    *nvim-early-retirement-table-of-contents*
 1. nvim-early-retirement        |nvim-early-retirement-nvim-early-retirement-|
   - Installation   |nvim-early-retirement-nvim-early-retirement--installation|
   - Configuration |nvim-early-retirement-nvim-early-retirement--configuration|
-  - Similar Plugins|nvim-early-retirement-nvim-early-retirement--similar-plugins|
+  - Similar plugins|nvim-early-retirement-nvim-early-retirement--similar-plugins|
   - Credits             |nvim-early-retirement-nvim-early-retirement--credits|
 
 ==============================================================================
@@ -14,8 +14,8 @@ Table of Contents                    *nvim-early-retirement-table-of-contents*
 
 
 
-Sendbuffers into early retirement by automatically closing them after x minutes
-of inactivity.
+Send buffers into early retirement by automatically closing them after x
+minutes of inactivity.
 
 Makes the bufferline or `:bnext` less crowded.
 
