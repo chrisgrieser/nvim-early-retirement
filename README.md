@@ -1,4 +1,4 @@
-# nvim-early-retirement 👴👵 <!-- rumdl-disable-line MD063 `nvim` lowercased -->
+# nvim-early-retirement 👴👵 <!-- rumdl-disable-line MD063 -->
 <a href="https://dotfyle.com/plugins/chrisgrieser/nvim-early-retirement">
 <img alt="badge" src="https://dotfyle.com/plugins/chrisgrieser/nvim-early-retirement/shield"/></a>
 
