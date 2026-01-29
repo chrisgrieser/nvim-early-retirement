@@ -1,4 +1,4 @@
-# nvim-early-retirement 👴👵 <!-- rumdl-disable-line MD063 -->
+# Nvim-early-retirement 👴👵 <!-- rumdl-disable-line MD063 -->
 <a href="https://dotfyle.com/plugins/chrisgrieser/nvim-early-retirement">
 <img alt="badge" src="https://dotfyle.com/plugins/chrisgrieser/nvim-early-retirement/shield"/></a>
 
@@ -8,12 +8,10 @@ of inactivity.
 Makes the bufferline or `:bnext` less crowded.
 
 <!-- toc -->
-
 - [Installation](#installation)
 - [Configuration](#configuration)
-- [Similar Plugins](#similar-plugins)
+- [Similar plugins](#similar-plugins)
 - [Credits](#credits)
-
 <!-- tocstop -->
 
 ## Installation
