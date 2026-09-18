@@ -26,6 +26,17 @@ local function deleteBufferWhenFileDeleted()
 		return
 	end
 
+	-- Remember which buffers existed on disk at some point, so that new files
+	-- that have not been written yet (e.g. `nvim new-file.txt`) are not
+	-- mistaken for deleted files.
+	for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
+		local bufPath = vim.api.nvim_buf_get_name(bufnr)
+		if uv.fs_stat(bufPath) then vim.b[bufnr].earlyRetirementWasOnDisk = true end
+	end
+	vim.api.nvim_create_autocmd({ "BufReadPost", "BufWritePost" }, {
+		callback = function(ctx) vim.b[ctx.buf].earlyRetirementWasOnDisk = true end,
+	})
+
 	vim.api.nvim_create_autocmd("FocusGained", {
 		callback = function()
 			local closedBuffers = {}
@@ -39,8 +50,8 @@ local function deleteBufferWhenFileDeleted()
 					local bufPath = vim.api.nvim_buf_get_name(bufnr)
 					local doesNotExist = uv.fs_stat(bufPath) == nil
 					local notSpecialBuffer = vim.bo[bufnr].buftype == ""
-					local notNewBuffer = bufPath ~= ""
-					return doesNotExist and notSpecialBuffer and notNewBuffer
+					local wasOnDisk = vim.b[bufnr].earlyRetirementWasOnDisk == true
+					return doesNotExist and notSpecialBuffer and wasOnDisk
 				end)
 				:each(function(bufnr)
 					local bufName = vim.fs.basename(vim.api.nvim_buf_get_name(bufnr))
